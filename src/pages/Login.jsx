@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
 import axios from "axios";
+import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import * as Yup from "yup";
@@ -8,6 +8,8 @@ import * as Yup from "yup";
 
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+
+import { Person2TwoTone } from '@mui/icons-material';
 
 const LoginWrapper = styled.div`
   padding: 2rem;
@@ -44,9 +46,16 @@ const SubmitButton = styled.button`
   border-radius: 4px;
   cursor: pointer;
   margin-right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
   &:hover {
     background-color: #0056b3;
+  }
+
+  &:active {
+        opacity: .7;
   }
 `;
 
@@ -128,8 +137,11 @@ const Login = () => {
           <Input type="password" id="password" name="password" value={formData.password} onChange={handleChange} />
         </FormGroup>
 
-        <SubmitButton type="submit">Entrar</SubmitButton>
-        <SubmitButton type="button" onClick={teste}>LOGOUT</SubmitButton>
+        <SubmitButton type="submit">
+          <Person2TwoTone />
+          Entrar
+        </SubmitButton>
+        {/* <SubmitButton type="button" onClick={teste}>LOGOUT</SubmitButton> */}
       </LoginForm>
     </LoginWrapper>
   )

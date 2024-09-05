@@ -54,6 +54,10 @@ const SubmitButton = styled.button`
   &:hover {
     background-color: #0056b3;
   }
+
+  &:active {
+        opacity: .7;
+    }
 `;
 
 const Booking = () => {

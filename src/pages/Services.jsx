@@ -4,6 +4,20 @@ import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import Features from "../components/Features";
 
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+
+// import ModalUnstyled from '@mui/core/ModalUnstyled';
+import { EventAvailable, EventBusy } from '@mui/icons-material';
+
+
+// import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+
+
 const ServicesWrapper = styled.div`
     padding: 2rem;
 `;
@@ -38,12 +52,14 @@ const ContentTableBody = styled.tbody``
 const ContentTableTr = styled.tr`
     display: flex;
     padding: .4rem 0;
+    /* color: #fefefe; */
     /* margin-left: 10px; */
 `
 const ContentTableTh = styled.th`
     display: flex;
     flex: 1;
     margin-left: 10px;
+    color: #fefefe;
 `
 const ContentTableTd = styled.td`
     display: flex;
@@ -51,18 +67,67 @@ const ContentTableTd = styled.td`
     margin-left: 10px;
 `
 const Button = styled.button`
+    display:flex;
+    align-items: center;
+    justify-content: space-around;
     outline: none;
     border: none;
+    width: 120px;
     padding: .4rem .6rem;
     border-radius: .2rem;
     background: #007BFF;
     color: #ffffff;
+    margin-right: 15px;
+    cursor: pointer;
+
+    &:hover {
+    background-color: #0056b3;
+    }
+
+    &:active {
+        opacity: .7;
+    }
 `
+
+const FormGroup = styled.div`
+  margin-bottom: 1rem;
+`;
+
+const Select = styled.select`
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+`;
+
+const Label = styled.label`
+  display: block;
+  margin-bottom: 0.5rem;
+`;
+
+const Input = styled.input`
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+`;
+
+
 
 const Services = () => {
 
+    const [open, setOpen] = React.useState(false);
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+
     const [loading, setLoading] = useState(false);
     const [clientes, setClientes] = useState([]);
+    const [date, setDate] = useState();
 
     useEffect(() => {
         getClientes();
@@ -82,23 +147,57 @@ const Services = () => {
         });
     }
 
+    //TODO Aqui ainda está com erro, está dando update somente no ultimo registro
     const  handleUpdate = async (id) => { 
-        // const bookingUpdate = clientes.filter((bookingItem) => bookingItem._id === id);
-        // if (bookingUpdate[0]._id === id ){
-        //     await axios.put(`http://localhost:3001/booking/${id}`, {
-        //         service: clientes.service, 
-        //         date: clientes.date, 
-        //         reserva: clientes.reserva
-        //     })
-        // }
-        alert("cliquei pra dar update")
+        const bookingUpdate = clientes.filter((bookingItem) => bookingItem._id === id);
+        
+        console.log( id )
+        console.log( bookingUpdate[0].date )
+
+        if (bookingUpdate[0]._id === id ){
+        
+            console.log( date )
+            await axios.put(`http://localhost:3001/booking/${id}`, {
+                date: date
+                // service: 'Personal', 
+            })
+            getClientes()
+        }
+        // console.log(bookingUpdate)
+        // alert("cheguei")
+    }
+
+    const handleUpdateCancel = async (id) => { 
+        const bookingUpdate = clientes.filter((bookingItem) => bookingItem._id === id);
+        if (bookingUpdate[0]._id === id ){
+        console.log( bookingUpdate )
+            await axios.put(`http://localhost:3001/booking/${id}`, {
+                reserva: false,
+            })
+            toast.success("😀 Agendamento cancelado com sucesso !!! 😀");
+            getClientes()
+        }
     }
 
     return (
         <ServicesWrapper>
+            <ToastContainer
+                position="top-center"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="colored"
+            // transition: Bounce,
+            />
             <ServicesTitle>Nossos Serviços</ServicesTitle>
             <ServicesList>
             <Features />
+            {/* <ModalUnstyled /> */}
                 {/* <ServiceItem>Academias</ServiceItem>
                 <ServiceItem>Personal Trainers</ServiceItem>
                 <ServiceItem>Consultas de Saúde</ServiceItem> */}
@@ -109,7 +208,7 @@ const Services = () => {
                             <ContentTableTh>Data Agendamento</ContentTableTh>
                             <ContentTableTh>Hora Agendamento</ContentTableTh>
                             <ContentTableTh>Reserva</ContentTableTh>
-                            <ContentTableTh></ContentTableTh>
+                            <ContentTableTh>Ação</ContentTableTh>
                         </ContentTableTr>
                     </ContentTableHead>
 
@@ -121,7 +220,7 @@ const Services = () => {
                                 </ContentTableTr>
                             ) : (
                                 clientes?.length > 0 ?
-                                    clientes.map((cliente, index) => (
+                                    clientes.map((cliente, index) => (                                      
                                         <ContentTableTr
                                             key={index}
                                             style={{background: index % 2 === 0 ? 'rgba(0,0,0,.1)' : 'unset'}}
@@ -145,9 +244,58 @@ const Services = () => {
                                                  }).format(new Date(cliente.date))}
                                             </ContentTableTd>
                                             <ContentTableTd>{cliente.reserva === true ? "Agenda Ativa" : "Agenda Cancelada" }</ContentTableTd>
-                                            {/* <ContentTableTd>
-                                                <Button type="button" onClick={ () => handleUpdate(cliente._id) } >Editar</Button>
-                                            </ContentTableTd> */}
+                                            <ContentTableTd>
+                                                {/* <Button type="button" onClick={ () => handleUpdate(cliente._id) } > */}
+                                                
+                                                {/* -----------------------------------Modal-----------------------------} */}
+                                                <Dialog
+                                                        open={open}
+                                                        onClose={handleClose}
+                                                        aria-labelledby="alert-dialog-title"
+                                                        aria-describedby="alert-dialog-description"
+                                                    >
+                                                        <DialogTitle id="alert-dialog-title">
+                                                        {"Alterar Meu Agendamento"}
+                                                        </DialogTitle>
+                                                        <DialogContent>
+
+                                                            <FormGroup>
+                                                                <Select id="service" name="service" onChange={""}>
+                                                                    <option value="">Selecione um serviço</option>
+                                                                    <option value="Academia">Academia</option>
+                                                                    <option value="Personal">Personal Trainer</option>
+                                                                    <option value="Consulta">Consulta de Saúde</option>
+                                                                </Select>
+                                                                <Label htmlFor="date">Data</Label>
+                                                                <Input type="datetime-local" id="date" name="date"
+                                                                    value={date}
+                                                                    onChange={(ev) => setDate(ev.target.value)}
+                                                                />
+                                                            </FormGroup>
+
+                                                        </DialogContent>
+                                                        <DialogActions>
+                                                            <Button onClick={ () => handleUpdate(cliente._id) }  >Alterar</Button>
+                                                            <Button onClick={handleClose} autoFocus>Cancelar</Button>
+                                                        </DialogActions>
+                                                </Dialog>
+                                                {/* -----------------------------------Modal-----------------------------} */}
+                                                
+                                                <Button type="button" onClick={ handleClickOpen } >
+                                                    <EventAvailable />
+
+                                                    { /* Modal */ }
+                                                    {/* <Modal /> */}
+                                                    Reagendar
+                                                
+                                                </Button>
+
+                                                { /* Modal */ }
+                                                <Button type="button" onClick={ () => handleUpdateCancel(cliente._id) } >
+                                                    <EventBusy />
+                                                    Cancelar
+                                                </Button>
+                                            </ContentTableTd>
                                         </ContentTableTr>
                                     )) : (
                                         <ContentTableTd colSpan={3}>Nenhum cliente cadastrado</ContentTableTd>
