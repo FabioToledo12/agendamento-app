@@ -1,0 +1,86 @@
+
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background-color: #f4f4f4;
+    }
+
+    header {
+      background-color: #3498db;
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header img {
+      height: 100px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 50px auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 30px;
+    }
+
+    .services {
+      display: flex;
+      justify-content: space-around;
+    }
+
+    .service {
+      width: 30%;
+      padding: 20px;
+      background-color: #ecf0f1;
+      border-radius: 8px;
+      text-align: center;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .service:hover {
+      background-color: #bdc3c7;
+    }
+
+    .service h2 {
+      margin-bottom: 20px;
+    }
+
+    .service input[type="checkbox"] {
+      margin-top: 10px;
+    }
+
+    .btn-pagar {
+      display: block;
+      width: 100%;
+      margin-top: 30px;
+      padding: 15px;
+      background-color: #3498db;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 18px;
+      text-align: center;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-pagar:hover {
+      background-color: #2980b9;
+    }
+ 

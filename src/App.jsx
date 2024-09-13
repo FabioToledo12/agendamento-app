@@ -1,11 +1,12 @@
 import React from 'react';
-import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+import {Route, BrowserRouter as Router, Routes} from 'react-router-dom';
 import Layout from './components/Layout';
-import Home from './pages/Home';
-import Services from './pages/Services';
 import Booking from './pages/Booking';
-import GlobalStyles from './styles/GlobalStyles';
+import Home from './pages/Home';
 import Login from "./pages/Login";
+import Paying from "./pages/Paying";
+import Services from './pages/Services';
+import GlobalStyles from './styles/GlobalStyles';
 
 function App() {
     return (
@@ -17,6 +18,7 @@ function App() {
                     <Route path="/services" element={<Services/>}/>
                     <Route path="/booking" element={<Booking/>}/>
                     <Route path="/login" element={<Login/>}/>
+                    <Route path="/paying" element={<Paying/>}/>
                 </Routes>
             </Layout>
         </Router>
