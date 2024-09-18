@@ -4,6 +4,9 @@ import styled from 'styled-components';
 
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import HeaderLogin from '../components/HeaderLogin';
+
+import { EventAvailableTwoTone } from '@mui/icons-material';
 
 const BookingWrapper = styled.div`
   padding: 2rem;
@@ -50,6 +53,10 @@ const SubmitButton = styled.button`
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
 
   &:hover {
     background-color: #0056b3;
@@ -126,8 +133,9 @@ const Booking = () => {
           <Label htmlFor="time">Horário</Label>
           <Input type="time" id="time" name="time" value={formData.hour} onChange={handleChange} />
         </FormGroup> */}
-        <SubmitButton type="submit">Agendar</SubmitButton>
+        <SubmitButton type="submit"> <EventAvailableTwoTone /> Agendar</SubmitButton>
       </BookingForm>
+      <HeaderLogin/>
     </BookingWrapper>
   );
 };

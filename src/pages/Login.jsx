@@ -106,11 +106,6 @@ const Login = () => {
     };
   }
 
-  const teste = () => {
-    // auth.logout();
-    alert("Sair do App")
-  }
-
   return (
     <LoginWrapper>
       <ToastContainer

@@ -53,8 +53,9 @@ const Header = () => {
                 <Logo>AgendaFácil</Logo>
                 <NavLinks>
                     <NavLink to="/">Home</NavLink>
+                    <NavLink to="/login">Login</NavLink>
 
-                    { auth.isLoggedIn ? (
+                    {/* { auth.isLoggedIn ? (
                         <>
                             <NavLink to="/services">Serviços</NavLink>
                             <NavLink to="/booking">Agendar</NavLink>
@@ -66,7 +67,7 @@ const Header = () => {
                             <NavLink to="/booking">Agendar</NavLink>
                             <NavLink to="/paying">Pagamentos</NavLink>
                         </>
-                    )}
+                    )} */}
 
                     {/*<NavLink to="/services">Serviços</NavLink>*/}
                     {/*<NavLink to="/booking">Agendar</NavLink>*/}
