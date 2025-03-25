@@ -46,7 +46,7 @@ const Home = () => {
 	return (
 		<>
 			<HeroSection>
-				<HeroTitle>Agende seu bem-estar com facilidade</HeroTitle>
+				<HeroTitle> Agende seu bem-estar com facilidade</HeroTitle>
 				<HeroSubtitle>
 					Academias, Personal Trainers e Consultas de Saúde em um só lugar
 				</HeroSubtitle>
@@ -54,7 +54,7 @@ const Home = () => {
 					href="whatsapp://send?text=Olá&phone=61991508973"
 					target="_blank"
 				>
-					Agende Agora
+					Teste Agende Agora
 				</CTAButton>
 			</HeroSection>
 			<Features />
